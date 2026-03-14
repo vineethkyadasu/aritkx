@@ -1,44 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh;
-}
-
 @layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
   html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
     font-family: 'Inter', system-ui, sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  ::selection {
+    background-color: #c8a96e;
+    color: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c8a96e;
   }
 }
 
 @layer components {
+  .section-padding {
+    @apply px-6 md:px-12 lg:px-20 xl:px-32;
+  }
+
+  .nav-link {
+    position: relative;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #d4d4d4;
+    transition: color 0.3s ease;
+  }
+  .nav-link:hover {
+    color: #ffffff;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: white;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
   .btn-primary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    @apply inline-flex items-center gap-2 px-8 py-4 bg-white text-black text-xs font-semibold tracking-widest uppercase transition-all;
+    transition-duration: 400ms;
   }
-  
-  .btn-secondary {
-    @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+  .btn-primary:hover {
+    background-color: #c8a96e;
+    color: white;
+    transform: scale(1.05);
+  }
+  .btn-primary:active { transform: scale(0.95); }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-8 py-4 border border-white text-white text-xs font-semibold tracking-widest uppercase transition-all;
+    transition-duration: 400ms;
+  }
+  .btn-outline:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.05);
+  }
+  .btn-outline:active { transform: scale(0.95); }
+
+  .section-label {
+    @apply text-xs font-semibold tracking-widest-xl uppercase text-brand-accent mb-4;
   }
 
-  .input-primary {
-    @apply block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm;
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-tight;
   }
 
-  .card {
-    @apply bg-white shadow rounded-lg overflow-hidden;
+  .product-card {
+    @apply relative overflow-hidden cursor-pointer;
   }
+
+  .product-card-image {
+    @apply w-full h-full object-cover;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-hidden {
+    @apply opacity-0 translate-y-12;
+  }
+
+  .gradient-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .writing-mode-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .overflow-clip {
+    overflow: clip;
+  }
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hero slide transitions */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Marquee */
+.marquee-wrapper {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Custom cursor dot */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #c8a96e;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+}
+
+/* Product card quick-add */
+.quick-add-btn {
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .quick-add-btn {
+  transform: translateY(0%);
+}
+
+/* Image hover zoom */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+}
+
+/* Divider line animation */
+.hr-animate {
+  width: 0;
+  height: 1px;
+  background: white;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hr-animate.in-view {
+  width: 100%;
 }
