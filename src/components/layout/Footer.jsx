@@ -16,8 +16,8 @@ const footerLinks = {
     { label: 'Careers', to: '/about' },
   ],
   Support: [
-    { label: 'Shipping & Returns', to: '/shipping' },
-    { label: 'Size Guide', to: '/shop' },
+    { label: 'Shipping Policy', to: '/shipping' },
+    { label: 'Refund & Cancellation', to: '/refunds' },
     { label: 'Track Order', to: '/contact' },
     { label: 'Privacy Policy', to: '/privacy' },
   ],

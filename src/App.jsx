@@ -13,6 +13,8 @@ import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
 import ShippingPage from './pages/ShippingPage';
 import PrivacyPage from './pages/PrivacyPage';
+import RefundPage from './pages/RefundPage';
+import ScrollToTop from './components/animation/ScrollToTop';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -42,6 +44,7 @@ function AnimatedRoutes() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/shipping" element={<ShippingPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/refunds" element={<RefundPage />} />
         </Routes>
         <Footer />
       </motion.div>
@@ -53,6 +56,7 @@ export default function App() {
   return (
     <SmoothScroll>
       <Router>
+        <ScrollToTop />
         <Header />
         <AnimatedRoutes />
       </Router>
