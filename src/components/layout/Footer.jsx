@@ -19,7 +19,7 @@ const footerLinks = {
     { label: 'Shipping & Returns', to: '/shipping' },
     { label: 'Size Guide', to: '/shop' },
     { label: 'Track Order', to: '/contact' },
-    { label: 'Privacy Policy', to: '/shipping' },
+    { label: 'Privacy Policy', to: '/privacy' },
   ],
 };
 
@@ -142,7 +142,7 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex gap-6">
-          <Link to="/shipping" className="text-neutral-600 hover:text-white text-xs transition-colors duration-300">
+          <Link to="/privacy" className="text-neutral-600 hover:text-white text-xs transition-colors duration-300">
             Privacy Policy
           </Link>
           <Link to="/shipping" className="text-neutral-600 hover:text-white text-xs transition-colors duration-300">

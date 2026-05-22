@@ -12,6 +12,7 @@ import AboutPage from './pages/AboutPage';
 import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
 import ShippingPage from './pages/ShippingPage';
+import PrivacyPage from './pages/PrivacyPage';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -40,6 +41,7 @@ function AnimatedRoutes() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
         </Routes>
         <Footer />
       </motion.div>

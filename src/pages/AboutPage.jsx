@@ -30,10 +30,62 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-3xl md:text-5xl font-light text-white text-center italic leading-tight max-w-4xl"
           >
-            &ldquo;Modern Streetwear Crafted for Identity&rdquo;
+            &ldquo;Welcome to ARITKX — Elevated Culture.&rdquo;
           </motion.blockquote>
         </div>
       </div>
+
+      {/* Elevated Culture Section */}
+      <section className="section-padding py-24 bg-black border-b border-white/5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col justify-start"
+          >
+            <p className="section-label mb-2">The Philosophy</p>
+            <h2 className="text-3xl font-light text-white mb-6">Elevated Culture</h2>
+            <p className="text-neutral-400 text-sm leading-relaxed font-light">
+              ARITKX is an online clothing brand built around the idea of Elevated Culture — where 
+              fashion meets identity, attitude, and self-expression. We are passionate about delivering 
+              quality clothing that speaks to those who dare to stand out.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="flex flex-col justify-start"
+          >
+            <p className="section-label mb-2">Our Experience</p>
+            <h2 className="text-3xl font-light text-white mb-6">Online First</h2>
+            <p className="text-neutral-400 text-sm leading-relaxed font-light">
+              We are a proudly online-first brand, bringing our collections directly to your doorstep across 
+              India. Whether you are looking for everyday essentials or statement pieces, ARITKX is here 
+              to elevate your wardrobe.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col justify-start"
+          >
+            <p className="section-label mb-2">Our Origins</p>
+            <h2 className="text-3xl font-light text-white mb-6">Bhainsa, Telangana</h2>
+            <p className="text-neutral-400 text-sm leading-relaxed font-light">
+              Based in Bhainsa, Telangana, we operate entirely online — making it easy for customers 
+              across India to discover and shop our collections from the comfort of their homes.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Brand Story */}
       <BrandStory />

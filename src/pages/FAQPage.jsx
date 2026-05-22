@@ -15,7 +15,7 @@ const faqs = [
     category: 'Returns & Exchanges',
     items: [
       { q: 'What is your return policy?', a: 'We accept returns within 15 days of delivery for unused, unwashed items with original tags attached. Limited edition items are final sale.' },
-      { q: 'How do I start a return?', a: 'Email us at hello@aritkx.com with your order number and reason. Our team will respond within 24 hours with return instructions.' },
+      { q: 'How do I start a return?', a: 'Email us at gchethan2032@gmail.com with your order number and reason. Our team will respond within 24 hours with return instructions.' },
       { q: 'Can I exchange for a different size?', a: 'Yes! Exchanges are processed within 5–7 business days. We recommend referring to our size guide before ordering to get the perfect fit.' },
     ],
   },
