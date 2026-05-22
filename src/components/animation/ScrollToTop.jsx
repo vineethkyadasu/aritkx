@@ -49,7 +49,11 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     // Scroll to top
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
 
     // Dynamic SEO
     const path = location.pathname;
