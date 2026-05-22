@@ -1,53 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-ARITKX
-Refund & Cancellation Policy
-Last Updated: May 2025
-At ARITKX, we want you to love what you ordered.If something is not right, we are here to
-help.Please read our Refund and Cancellation Policy carefully.
-3.1 Cancellations
-You may cancel your order within 24 hours of placing it, provided it has not yet been
-dispatched.To request a cancellation, please contact us immediately at[EMAIL — to be 
-updated]with your order number.
-Once an order has been dispatched, it cannot be cancelled.In such cases, you may initiate 
-a return after receiving the item as per our Return Policy below.
-3.2 Returns
-We accept returns within 14 days of delivery.To be eligible for a return, the following 
-conditions must be met:
-• The clothing item must be unworn, unwashed, and in its original condition with all 
-tags attached
-• The item must be in its original packaging
-• A valid proof of purchase(order number or receipt) must be provided
-• The return request must be raised within 14 days of the delivery date
-3.3 How to Initiate a Return
-To start a return, please follow these steps:
-• Contact us at[EMAIL — to be updated] within 14 days of receiving your order
-• Provide your order number and reason for return
-• Our team will review your request and respond within 2 - 3 business days
-• If approved, we will share the return address and instructions
-3.4 Refund Process
-Once we receive and inspect the returned item, we will notify you of the approval or rejection 
-of your refund.If approved, your refund will be processed within 5 - 7 business days and 
-credited back to your original payment method.
-Please note that the time taken for the refund to reflect in your account may vary depending 
-on your bank or payment provider.
-3.5 Return Shipping
-Customers are responsible for return shipping costs unless the item arrives damaged or
-incorrect.In cases where ARITKX is at fault(wrong item sent or item arrived damaged), we 
-will cover the return shipping cost in full.
-We recommend using a trackable shipping method for returns.ARITKX is not responsible for 
-returns that are lost or damaged in transit.
-3.6 Damaged or Incorrect Items
-If you receive a damaged or incorrect item, please contact us within 48 hours of delivery with 
-the following:
-• Your order number
-• Clear photos of the damaged or incorrect item
-• A brief description of the issue
-We will arrange a replacement or issue a full refund at no additional cost to you.
-3.7 Exchange Policy
-At this time, we do not offer direct exchanges.If you would like a different size or colour,
-  please return your item for a refund and place a new order.
-For any return or refund queries, please contact ARITKX at[EMAIL — to be updated].import { Mail, Instagram, MessageCircle, MapPin, Phone } from 'lucide-react';
+import { Mail, Instagram, MessageCircle, MapPin, Phone } from 'lucide-react';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
