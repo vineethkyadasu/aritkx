@@ -13,9 +13,11 @@ export default function Shop() {
 
   useEffect(() => {
     api.get('/products.php')
-      .then(res => setAllProducts(res.data))
+      .then(res => {
+        setAllProducts(Array.isArray(res.data) ? res.data : []);
+      })
       .catch(() => {
-        // Fallback to static products if API unavailable (dev)
+        // Fallback to empty array if API unavailable (dev)
         setAllProducts([]);
       })
       .finally(() => setLoading(false));

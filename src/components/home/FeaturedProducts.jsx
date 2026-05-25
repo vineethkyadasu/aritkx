@@ -29,7 +29,7 @@ export default function FeaturedProducts() {
     api.get('/products.php?featured=1')
       .then(res => {
         const data = res.data;
-        setProducts(data.length > 0 ? data.slice(0, 4) : FALLBACK_PRODUCTS);
+        setProducts(Array.isArray(data) && data.length > 0 ? data.slice(0, 4) : FALLBACK_PRODUCTS);
       })
       .catch(() => setProducts(FALLBACK_PRODUCTS))
       .finally(() => setLoading(false));
