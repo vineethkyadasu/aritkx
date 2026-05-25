@@ -1,0 +1,21 @@
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /backend/
+
+    # Handle CORS preflight — let PHP deal with it
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [L]
+
+    # Route all requests to existing PHP files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "\.(env|json|lock|log|md|sql|sh|bat)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

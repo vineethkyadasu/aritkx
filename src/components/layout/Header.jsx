@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'About', to: '/about' },
 ];
 
-export default function Header() {
+export default function Header({ onCartClick }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -78,16 +78,13 @@ export default function Header() {
             >
               <Search size={18} />
             </button>
-            <Link
-              to="/shop"
+            <button
+              onClick={onCartClick}
               className="relative text-neutral-300 hover:text-white transition-colors duration-300"
               aria-label="Cart"
             >
               <ShoppingBag size={18} />
-              <span className="absolute -top-2 -right-2 w-4 h-4 bg-brand-accent text-black text-[9px] font-bold rounded-full flex items-center justify-center">
-                0
-              </span>
-            </Link>
+            </button>
           </div>
         </div>
 

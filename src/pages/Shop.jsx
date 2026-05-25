@@ -1,93 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Filter, Search } from 'lucide-react';
-
-const allProducts = [
-  {
-    id: 1,
-    name: 'Void Oversized Tee',
-    price: '₹2,499',
-    category: 'Tops',
-    image: '/images/void-tee.png',
-    hoverImage: '/images/void-tee.png',
-    tag: 'Best Seller',
-  },
-  {
-    id: 2,
-    name: 'Shadow Cargo Pants',
-    price: '₹4,999',
-    category: 'Bottoms',
-    image: '/images/cargo-pants.png',
-    hoverImage: '/images/cargo-pants.png',
-    tag: 'Essential',
-  },
-  {
-    id: 3,
-    name: 'Monolith Hoodie',
-    price: '₹5,499',
-    category: 'Outerwear',
-    image: '/images/hoodie.png',
-    hoverImage: '/images/hoodie.png',
-    tag: 'Limited',
-  },
-  {
-    id: 4,
-    name: 'Axis Track Jacket',
-    price: '₹6,299',
-    category: 'Outerwear',
-    image: '/images/hoodie.png',
-    hoverImage: '/images/hoodie.png',
-    tag: null,
-  },
-  {
-    id: 5,
-    name: 'Core Long Sleeve',
-    price: '₹2,999',
-    category: 'Tops',
-    image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=85&fit=crop',
-    hoverImage: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&q=85&fit=crop',
-    tag: null,
-  },
-  {
-    id: 6,
-    name: 'Minimal Joggers',
-    price: '₹3,799',
-    category: 'Bottoms',
-    image: 'https://images.unsplash.com/photo-1539533018257-63783ebde57d?w=600&q=85&fit=crop',
-    hoverImage: 'https://images.unsplash.com/photo-1624378441864-6eda7ca60bd8?w=600&q=85&fit=crop',
-    tag: 'New',
-  },
-  {
-    id: 7,
-    name: 'Archive Bomber',
-    price: '₹8,499',
-    category: 'Outerwear',
-    image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&q=85&fit=crop',
-    hoverImage: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=85&fit=crop',
-    tag: 'Limited',
-  },
-  {
-    id: 8,
-    name: 'Noir Cap',
-    price: '₹1,499',
-    category: 'Accessories',
-    image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=85&fit=crop',
-    hoverImage: 'https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=600&q=85&fit=crop',
-    tag: null,
-  },
-];
+import { ShoppingBag, Search } from 'lucide-react';
+import api from '../utils/api';
 
 const categories = ['All', 'Tops', 'Bottoms', 'Outerwear', 'Accessories'];
 
 export default function Shop() {
+  const [allProducts, setAllProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    api.get('/products.php')
+      .then(res => setAllProducts(res.data))
+      .catch(() => {
+        // Fallback to static products if API unavailable (dev)
+        setAllProducts([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const filtered = allProducts.filter((p) => {
     const matchCat = activeCategory === 'All' || p.category === activeCategory;
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
+
+  const handleAddToCart = (product, size = 'M') => {
+    if (typeof window.__aritkx_addToCart === 'function') {
+      window.__aritkx_addToCart(product, size);
+      // Trigger the cart to open
+      window.dispatchEvent(new CustomEvent('aritkx:open-cart'));
+    }
+  };
 
   return (
     <main className="bg-black min-h-screen pt-28">
@@ -134,7 +80,11 @@ export default function Shop() {
 
       {/* Product Grid */}
       <div className="section-padding py-12">
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-32">
+            <div className="w-8 h-8 border-2 border-white/10 border-t-white rounded-full animate-spin" />
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-neutral-600">No products found.</div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -153,7 +103,7 @@ export default function Shop() {
                       className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:opacity-0 group-hover:scale-105"
                     />
                     <img
-                      src={product.hoverImage}
+                      src={product.hover_image || product.image}
                       alt={product.name}
                       className="absolute inset-0 w-full h-full object-cover opacity-0 scale-105 transition-all duration-700 group-hover:opacity-100 group-hover:scale-100"
                     />
@@ -162,16 +112,19 @@ export default function Shop() {
                         {product.tag}
                       </span>
                     )}
-                    <div className="quick-add-btn absolute bottom-0 left-0 right-0 z-10 bg-white text-black text-center py-3 flex items-center justify-center gap-2 text-xs font-semibold tracking-widest uppercase hover:bg-brand-accent hover:text-white transition-colors duration-300">
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className="quick-add-btn absolute bottom-0 left-0 right-0 z-10 bg-white text-black text-center py-3 flex items-center justify-center gap-2 text-xs font-semibold tracking-widest uppercase hover:bg-brand-accent hover:text-white transition-colors duration-300"
+                    >
                       <ShoppingBag size={13} />
                       Quick Add
-                    </div>
+                    </button>
                   </div>
                   <div className="pt-4">
                     <p className="text-neutral-500 text-xs tracking-widest uppercase mb-1">{product.category}</p>
                     <div className="flex justify-between items-center">
                       <h3 className="text-white text-sm font-medium">{product.name}</h3>
-                      <p className="text-brand-accent text-sm font-semibold">{product.price}</p>
+                      <p className="text-brand-accent text-sm font-semibold">₹{Number(product.price).toLocaleString('en-IN')}</p>
                     </div>
                   </div>
                 </div>

@@ -1,15 +1,28 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Instagram, MessageCircle, MapPin, Phone } from 'lucide-react';
+import api from '../utils/api';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
+    setError('');
+    setSubmitting(true);
+    try {
+      await api.post('/inquiries.php', form);
+      setSent(true);
+      setForm({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to send message. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -171,8 +184,11 @@ export default function ContactPage() {
                   className="w-full bg-neutral-900 border border-white/10 text-white placeholder-neutral-700 text-sm px-5 py-4 focus:outline-none focus:border-brand-accent transition-colors duration-300 resize-none"
                 />
               </div>
-              <button type="submit" className="btn-primary w-full justify-center">
-                Send Message
+              {error && (
+                <p className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded px-4 py-3">{error}</p>
+              )}
+              <button type="submit" disabled={submitting} className="btn-primary w-full justify-center disabled:opacity-60">
+                {submitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           )}
