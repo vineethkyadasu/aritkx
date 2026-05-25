@@ -220,41 +220,50 @@ export function handleMockRequest(config) {
     const inquiries = getStoredData('mock_inquiries', DEFAULT_INQUIRIES);
 
     // Calc stats
-    const totalSales = orders.filter(o => o.status === 'completed').reduce((sum, o) => sum + Number(o.total_amount), 0);
+    const totalSales = orders.filter(o => o.status === 'completed' || o.status === 'Paid' || o.status === 'Shipped' || o.status === 'Delivered').reduce((sum, o) => sum + Number(o.total_amount), 0);
     const totalOrders = orders.length;
     const totalProducts = products.length;
     const activeInquiries = inquiries.filter(i => i.is_read === 0).length;
 
-    // Daily revenue mock chart data (last 7 days)
-    const dailySales = [];
+    // Daily revenue mock chart data (last 7 days) matching { date, total }
+    const salesTrend = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      const label = d.toLocaleDateString('en-US', { weekday: 'short' });
-      // Calculate real total for this day if match
       const dateStr = d.toDateString();
       const dayTotal = orders
-        .filter(o => new Date(o.created_at).toDateString() === dateStr && o.status === 'completed')
+        .filter(o => new Date(o.created_at).toDateString() === dateStr && (o.status === 'completed' || o.status === 'Paid' || o.status === 'Shipped' || o.status === 'Delivered'))
         .reduce((sum, o) => sum + Number(o.total_amount), 0);
       
       // Fallback base values to make charts look beautiful if empty
       const baseValues = [8400, 12000, 5000, 9500, 16000, 7498, 2499];
-      dailySales.push({
-        label,
-        sales: dayTotal || baseValues[6 - i]
+      salesTrend.push({
+        date: d.toISOString().split('T')[0],
+        total: dayTotal || baseValues[6 - i]
       });
     }
+
+    // Category breakdown count matching { category, count }
+    const categoryCounts = {};
+    products.forEach(p => {
+      categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
+    });
+    const categoryBreakdown = Object.keys(categoryCounts).map(cat => ({
+      category: cat,
+      count: categoryCounts[cat]
+    }));
 
     return {
       success: true,
       stats: {
-        total_sales: totalSales || 27998, // beautiful display fallbacks
+        total_revenue: totalSales || 27998,
         total_orders: totalOrders,
         total_products: totalProducts,
-        active_inquiries: activeInquiries
+        new_inquiries: activeInquiries
       },
       recent_orders: orders.slice(0, 5),
-      daily_sales: dailySales
+      sales_trend: salesTrend,
+      category_breakdown: categoryBreakdown
     };
   }
 
