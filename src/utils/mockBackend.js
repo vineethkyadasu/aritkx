@@ -83,7 +83,7 @@ export function handleMockLogin(email, password) {
     return {
       success: true,
       token: 'mock_aritkx_token_abc123xyz_secure',
-      user: {
+      admin: {
         email: email,
         name: 'ARITKX Administrator'
       }
